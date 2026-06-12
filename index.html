@@ -68,13 +68,18 @@
       width:50px;height:50px;border-radius:18px;flex-shrink:0;
       background:linear-gradient(145deg,var(--primary),var(--secondary));
       box-shadow:0 10px 26px rgba(179,59,30,.28);
-      display:grid;place-items:center;
+      display:flex;align-items:center;justify-content:center;
       font-family:'Syne',sans-serif;font-size:1rem;font-weight:900;color:#fff;
       letter-spacing:-.03em;position:relative;overflow:hidden;
+    }
+    .brand-logo img{
+      width:100%;height:100%;object-fit:contain;
+      object-position:center;
     }
     .brand-logo::after{
       content:'';position:absolute;inset:0;
       background:linear-gradient(135deg,rgba(255,255,255,.22),transparent 60%);
+      pointer-events:none;
     }
     .brand-text{line-height:1.1}
     .brand-name{
@@ -432,7 +437,7 @@
 
     /* ─── EQUIPO ─────────────────────────── */
     .team-card{
-      background:#fff;border:1px solid var(--line);
+      background:#fad4a2;border:1px solid var(--line);
       border-radius:var(--r-s);padding:28px;text-align:center;
       transition:transform .25s,box-shadow .25s;
     }
@@ -632,7 +637,7 @@
     <div class="container nav-inner">
 
       <div class="brand">
-        <div class="brand-logo">NC</div>
+        <div class="brand-logo"><img src="img/logo1.png" alt="NutriCake Logo"></div>
         <div class="brand-text">
           <div class="brand-name">NutriCake</div>
           <div class="brand-tag">Energía &amp; nutrición</div>
