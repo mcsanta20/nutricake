@@ -568,6 +568,101 @@
     .transparency-note strong{display:block;margin-bottom:6px;color:#7a4b00}
     .transparency-note p{font-size:.88rem;line-height:1.65;color:var(--muted)}
 
+    /* ─── PRODUCT CATALOG ────────────────── */
+    .catalog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .product-card{
+      min-width:0;background:#fff;border:1px solid var(--line);border-radius:26px;
+      overflow:hidden;display:flex;flex-direction:column;position:relative;
+      transition:transform .3s,box-shadow .3s,border-color .3s;
+    }
+    .product-card:hover{
+      transform:translateY(-7px);box-shadow:var(--shadow);
+      border-color:color-mix(in srgb,var(--pc,var(--primary)) 35%,transparent);
+    }
+    .product-visual{
+      min-height:230px;padding:24px;position:relative;overflow:hidden;
+      display:flex;align-items:flex-end;color:#fff;
+      background:
+        radial-gradient(circle at 80% 16%,rgba(255,255,255,.32),transparent 24%),
+        linear-gradient(145deg,var(--pv1),var(--pv2));
+    }
+    .product-visual::before{
+      content:'';position:absolute;width:210px;height:210px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.18);right:-84px;top:-92px;
+    }
+    .product-visual::after{
+      content:attr(data-mark);position:absolute;right:18px;bottom:-24px;
+      font-size:9rem;line-height:1;opacity:.22;filter:saturate(.8);
+      transform:rotate(-8deg);
+    }
+    .product-topline{
+      position:absolute;left:20px;top:18px;right:20px;z-index:2;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+    }
+    .product-badge{
+      display:inline-flex;padding:7px 11px;border-radius:999px;
+      background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);
+      backdrop-filter:blur(8px);font-size:.72rem;font-weight:800;
+    }
+    .product-stock{
+      display:flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;
+      color:rgba(255,255,255,.78);
+    }
+    .product-stock::before{
+      content:'';width:7px;height:7px;border-radius:50%;background:#90e78a;
+      box-shadow:0 0 0 4px rgba(144,231,138,.14);
+    }
+    .product-visual-copy{position:relative;z-index:2}
+    .product-visual-copy small{
+      display:block;text-transform:uppercase;letter-spacing:.1em;
+      color:rgba(255,255,255,.7);font-size:.68rem;font-weight:800;margin-bottom:7px;
+    }
+    .product-visual-copy strong{
+      display:block;font-family:'Syne',sans-serif;font-size:1.65rem;line-height:1.05;
+    }
+    .product-body{padding:24px;display:flex;flex-direction:column;gap:16px;flex:1}
+    .product-body p{color:var(--muted);line-height:1.65;font-size:.88rem}
+    .flavor-tags{display:flex;gap:7px;flex-wrap:wrap}
+    .flavor-tags span{
+      padding:6px 10px;border-radius:999px;background:var(--soft);
+      color:var(--muted);font-size:.72rem;font-weight:700;
+    }
+    .product-price-row{
+      margin-top:auto;padding-top:4px;display:flex;align-items:flex-end;
+      justify-content:space-between;gap:12px;
+    }
+    .product-price small{display:block;color:var(--muted);font-size:.7rem;margin-bottom:2px}
+    .product-price strong{
+      font-family:'Syne',sans-serif;font-size:1.65rem;color:var(--pc,var(--primary));
+      letter-spacing:-.04em;
+    }
+    .product-price span{font-size:.72rem;color:var(--muted)}
+    .quick-order{
+      border:none;border-radius:14px;padding:12px 15px;cursor:pointer;
+      background:var(--pc,var(--primary));color:#fff;font-weight:800;font-size:.78rem;
+      transition:transform .2s,filter .2s;
+    }
+    .quick-order:hover{transform:translateY(-2px);filter:brightness(1.08)}
+    .catalog-note{
+      margin-top:18px;padding:14px 18px;border-radius:16px;text-align:center;
+      color:var(--muted);background:rgba(74,122,70,.08);
+      border:1px solid rgba(74,122,70,.14);font-size:.8rem;line-height:1.55;
+    }
+    .packs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+    .pack-card{
+      display:flex;align-items:center;gap:18px;padding:20px;border-radius:20px;
+      background:linear-gradient(135deg,rgba(179,59,30,.07),rgba(240,180,41,.08));
+      border:1px solid var(--line);
+    }
+    .pack-icon{
+      flex:0 0 58px;height:58px;border-radius:18px;display:grid;place-items:center;
+      background:#fff;border:1px solid var(--line);font-size:1.5rem;
+    }
+    .pack-copy{flex:1}
+    .pack-copy strong{display:block;font-family:'Syne',sans-serif;margin-bottom:4px}
+    .pack-copy span{display:block;color:var(--muted);font-size:.8rem;line-height:1.5}
+    .pack-price{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--primary)}
+
     /* ─── AUDIENCE ───────────────────────── */
     .audience-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
     .audience-card{
@@ -607,6 +702,7 @@
     .order-fields{display:grid;gap:18px}
     .field label{display:block;font-weight:700;font-size:.87rem;margin-bottom:8px}
     .choice-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+    .choice-row.four{grid-template-columns:repeat(2,1fr)}
     .choice{
       border:1px solid var(--line);border-radius:15px;background:#fff;
       padding:13px 10px;text-align:center;cursor:pointer;font-weight:700;font-size:.84rem;
@@ -616,6 +712,7 @@
       border-color:var(--primary);color:var(--primary);
       background:rgba(179,59,30,.06);box-shadow:0 0 0 3px rgba(179,59,30,.07);
     }
+    .choice:disabled{opacity:.42;cursor:not-allowed;box-shadow:none}
     .qty-control{
       width:max-content;display:flex;align-items:center;gap:4px;padding:5px;
       border:1px solid var(--line);border-radius:15px;background:#fff;
@@ -625,6 +722,13 @@
       cursor:pointer;font-weight:900;font-size:1.1rem;
     }
     .qty-control output{width:44px;text-align:center;font-weight:800}
+    .input-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .text-input{
+      width:100%;border:1px solid var(--line);border-radius:15px;background:#fff;
+      padding:13px 14px;color:var(--text);outline:none;transition:.2s;
+    }
+    .text-input::placeholder{color:color-mix(in srgb,var(--muted) 72%,transparent)}
+    .text-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(179,59,30,.08)}
     .order-summary{
       border-radius:24px;padding:26px;color:#fff;
       background:linear-gradient(145deg,#2f1105,#6a270d);
@@ -639,6 +743,13 @@
     .summary-label{font-size:.77rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.54)}
     .summary-product{font-family:'Syne',sans-serif;font-size:1.5rem;margin:7px 0 5px}
     .summary-meta{color:rgba(255,255,255,.64);font-size:.9rem;line-height:1.55}
+    .summary-total{
+      margin-top:22px;padding:16px;border-radius:17px;background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.1);position:relative;z-index:1;
+    }
+    .summary-total span{display:block;font-size:.72rem;color:rgba(255,255,255,.55);margin-bottom:4px}
+    .summary-total strong{font-family:'Syne',sans-serif;font-size:2rem}
+    .summary-total small{display:block;margin-top:4px;color:rgba(255,255,255,.48);font-size:.68rem}
     .order-summary .btn-wa{position:relative;z-index:1;justify-content:center;width:100%}
     .microcopy{font-size:.75rem;color:rgba(255,255,255,.48);line-height:1.45;text-align:center}
 
@@ -685,7 +796,8 @@
     body.dark .theme-toggle,body.dark .trust-badge,body.dark .stat-c,
     body.dark .hero-card,body.dark .card,body.dark .p-item,body.dark .ing-card,
     body.dark .tl-item,body.dark .audience-card,body.dark .story-copy,
-    body.dark .faq-item,body.dark .choice,body.dark .qty-control{background:#25150e}
+    body.dark .faq-item,body.dark .choice,body.dark .qty-control,
+    body.dark .product-card,body.dark .pack-icon,body.dark .text-input{background:#25150e}
     body.dark .pinfo{background:rgba(22,12,7,.78)}
     body.dark .team-card{background:#3a2417}
     body.dark .value-strip{background:rgba(25,14,8,.66)}
@@ -838,6 +950,8 @@
       .audience-grid{grid-template-columns:repeat(2,1fr)}
       .process-grid{grid-template-columns:repeat(2,1fr);gap:16px}
       .process-step:nth-child(2)::after{display:none}
+      .catalog-grid{grid-template-columns:repeat(2,1fr)}
+      .product-card:last-child{grid-column:1/-1;max-width:560px;width:100%;justify-self:center}
     }
     @media(max-width:768px){
       .hero-grid,.g2,.g3,.ing-grid,.stats-row,.story-grid,.order-shell{grid-template-columns:1fr}
@@ -854,12 +968,16 @@
       .float-wa span{display:none}
       .float-wa{width:50px;height:50px;padding:0;justify-content:center}
       .choice-row{grid-template-columns:1fr}
+      .choice-row.four{grid-template-columns:repeat(2,1fr)}
+      .packs-grid{grid-template-columns:1fr}
     }
     @media(max-width:540px){
       .ing-grid{grid-template-columns:1fr}
       .pill-g{grid-template-columns:1fr}
       .footer-main{grid-template-columns:1fr}
       .audience-grid,.process-grid{grid-template-columns:1fr}
+      .catalog-grid{grid-template-columns:1fr}
+      .product-card:last-child{grid-column:auto;max-width:none}
       .process-step::after{display:none!important}
       .brand-tag{display:none}
       .container{width:min(100% - 26px,1180px)}
@@ -867,6 +985,9 @@
       .story-copy,.story-visual,.order-shell{padding:22px}
       .social-section{padding:34px 20px}
       .soc-card{padding:20px 12px}
+      .choice-row.four,.input-grid{grid-template-columns:1fr}
+      .pack-card{align-items:flex-start;flex-wrap:wrap}
+      .pack-price{margin-left:76px}
     }
     @media(prefers-reduced-motion:reduce){
       *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -897,8 +1018,8 @@
 
       <nav class="nav-links" aria-label="Principal">
         <a href="#historia">Nuestra idea</a>
+        <a href="#productos">Productos</a>
         <a href="#ingredientes">Ingredientes</a>
-        <a href="#propuesta">Beneficios</a>
         <a href="#pedido">Pedidos</a>
         <a href="#faq">Preguntas</a>
       </nav>
@@ -918,6 +1039,7 @@
 
     <div class="mobile-menu" id="mob">
       <a href="#historia"     onclick="closeMob()">❤️ Nuestra idea</a>
+      <a href="#productos"    onclick="closeMob()">🧁 Productos y precios</a>
       <a href="#ingredientes" onclick="closeMob()">🥄 Ingredientes</a>
       <a href="#problema"     onclick="closeMob()">⚠️ Problema</a>
       <a href="#propuesta"    onclick="closeMob()">✨ Propuesta</a>
@@ -950,10 +1072,8 @@
             trabajado para conservar un sabor agradable y una presentación que inspira confianza.
           </p>
           <div class="actions">
-            <a class="btn btn-primary"
-               href="https://wa.me/51939945852?text=Hola%20quiero%20comprar%20NutriCake"
-               target="_blank" rel="noopener">💬 Comprar por WhatsApp</a>
-            <a class="btn btn-outline" href="#ingredientes">Ver ingredientes</a>
+            <a class="btn btn-primary" href="#productos">🧁 Ver sabores y precios</a>
+            <a class="btn btn-outline" href="#pedido">Armar mi pedido</a>
           </div>
           <div class="trust-row">
             <span class="trust-badge"><span class="tdot"></span>Ingredientes seleccionados</span>
@@ -969,7 +1089,7 @@
 
         <!-- Product card -->
         <div class="hero-card rv">
-          <div class="prod-label">⭐ Producto estrella · MVP inicial</div>
+          <div class="prod-label">⭐ Tres sabores · pedidos por WhatsApp</div>
           <div class="cake-wrap">
             <div class="cake-glow"></div>
             <div class="cake-circle" id="cakeEl">
@@ -981,9 +1101,9 @@
           </div>
           <div class="pinfo-grid">
             <div class="pinfo"><strong>🌾 Ingredientes</strong><span>Avena, quinua, cacao e ingrediente hemínico aviar.</span></div>
-            <div class="pinfo"><strong>📦 Presentación</strong><span>Individual, caja para compartir y pedidos especiales.</span></div>
+            <div class="pinfo"><strong>📦 Presentación</strong><span>Individual, caja x6, caja x12 y pedidos especiales.</span></div>
             <div class="pinfo"><strong>💪 Propósito</strong><span>Complementar una alimentación variada con una opción práctica.</span></div>
-            <div class="pinfo"><strong>💛 Slogan</strong><span>"Energía y nutrición en cada porción"</span></div>
+            <div class="pinfo"><strong>💰 Precio</strong><span>Desde S/ 7,50 por unidad, según el sabor.</span></div>
           </div>
         </div>
 
@@ -1123,6 +1243,125 @@
       </div>
     </section>
 
+    <!-- ────────────────────────────────────── PRODUCTOS -->
+    <section class="section" id="productos">
+      <div class="container">
+        <div class="sw">
+          <div class="s-hd">
+            <div class="s-tag">🧁 Tres sabores, una misma idea</div>
+            <h2 class="s-title">Elige tu NutriCake<br>favorito</h2>
+            <p class="s-sub">Nuestra línea inicial reúne tres opciones elaboradas con harina integral, avena y harina de quinua. Los precios fueron redondeados a partir de la estructura de costos y márgenes planteados en el proyecto.</p>
+          </div>
+
+          <div class="catalog-grid">
+            <article class="product-card rv" style="--pc:#b33b1e">
+              <div class="product-visual" data-mark="🌾" style="--pv1:#7f2d18;--pv2:#d77d35">
+                <div class="product-topline">
+                  <span class="product-badge">⭐ Sabor insignia</span>
+                  <span class="product-stock">Bajo pedido</span>
+                </div>
+                <div class="product-visual-copy">
+                  <small>Receta clásica nutritiva</small>
+                  <strong>NutriCake<br>Original</strong>
+                </div>
+              </div>
+              <div class="product-body">
+                <p>El sabor base de la marca: suave, equilibrado y pensado para quienes quieren probar primero la propuesta original.</p>
+                <div class="flavor-tags">
+                  <span>Harina integral</span><span>Avena</span><span>Quinua</span>
+                </div>
+                <div class="product-price-row">
+                  <div class="product-price">
+                    <small>Desde</small>
+                    <strong>S/ 10,00</strong>
+                    <span>por unidad</span>
+                  </div>
+                  <button class="quick-order" type="button" data-product="original">Pedir ahora</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card rv d1" style="--pc:#5c2b18">
+              <div class="product-visual" data-mark="🍫" style="--pv1:#30140c;--pv2:#92502d">
+                <div class="product-topline">
+                  <span class="product-badge">🍫 Intenso y familiar</span>
+                  <span class="product-stock">Bajo pedido</span>
+                </div>
+                <div class="product-visual-copy">
+                  <small>Con cacao</small>
+                  <strong>NutriCake<br>Chocolate</strong>
+                </div>
+              </div>
+              <div class="product-body">
+                <p>Una alternativa con cacao para quienes buscan un sabor más intenso sin perder la base nutritiva de NutriCake.</p>
+                <div class="flavor-tags">
+                  <span>Cacao</span><span>Avena</span><span>Quinua</span>
+                </div>
+                <div class="product-price-row">
+                  <div class="product-price">
+                    <small>Desde</small>
+                    <strong>S/ 9,00</strong>
+                    <span>por unidad</span>
+                  </div>
+                  <button class="quick-order" type="button" data-product="chocolate">Pedir ahora</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card rv d2" style="--pc:#b27800">
+              <div class="product-visual" data-mark="🍌" style="--pv1:#976900;--pv2:#e2aa25">
+                <div class="product-topline">
+                  <span class="product-badge">🍌 Dulzor natural</span>
+                  <span class="product-stock">Bajo pedido</span>
+                </div>
+                <div class="product-visual-copy">
+                  <small>Con plátano</small>
+                  <strong>NutriCake<br>Banano</strong>
+                </div>
+              </div>
+              <div class="product-body">
+                <p>Una versión húmeda y aromática que aprovecha el sabor del plátano para ofrecer una experiencia naturalmente agradable.</p>
+                <div class="flavor-tags">
+                  <span>Plátano</span><span>Avena</span><span>Quinua</span>
+                </div>
+                <div class="product-price-row">
+                  <div class="product-price">
+                    <small>Desde</small>
+                    <strong>S/ 7,50</strong>
+                    <span>por unidad</span>
+                  </div>
+                  <button class="quick-order" type="button" data-product="banano">Pedir ahora</button>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="packs-grid">
+            <div class="pack-card rv">
+              <div class="pack-icon">🎁</div>
+              <div class="pack-copy">
+                <strong>Caja degustación · 6 unidades</strong>
+                <span>2 Original + 2 Chocolate + 2 Banano. Ideal para probar los tres sabores.</span>
+              </div>
+              <div class="pack-price">S/ 50</div>
+            </div>
+            <div class="pack-card rv d1">
+              <div class="pack-icon">🏠</div>
+              <div class="pack-copy">
+                <strong>Caja familiar · 12 unidades</strong>
+                <span>4 unidades de cada sabor para compartir, reuniones o pedidos grupales.</span>
+              </div>
+              <div class="pack-price">S/ 96</div>
+            </div>
+          </div>
+
+          <div class="catalog-note">
+            Los precios son referenciales para el proyecto y no incluyen delivery. La disponibilidad, fecha de preparación y costo de entrega se confirman por WhatsApp antes de realizar el pedido.
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ────────────────────────────────────── PROBLEMA -->
     <section class="section" id="problema">
       <div class="container">
@@ -1238,7 +1477,7 @@
           <div class="s-hd">
             <div class="s-tag">🧪 Primera versión</div>
             <h2 class="s-title">Producto mínimo viable (MVP)</h2>
-            <p class="s-sub">La primera versión sirve para validar si el público realmente lo compra, lo recomienda y lo percibe como atractivo y confiable.</p>
+            <p class="s-sub">La primera versión comercial incluye Original, Chocolate y Banano. Esto permite comparar cuál se vende más, cuál se recomienda y qué presentación prefiere el público.</p>
           </div>
           <div class="g2">
             <div class="card rv">
@@ -1352,32 +1591,40 @@
         <div class="sw">
           <div class="s-hd">
             <div class="s-tag">🚀 Visión de crecimiento</div>
-            <h2 class="s-title">Línea de innovación a futuro</h2>
-            <p class="s-sub">NutriCake es la primera etapa de una marca completa de bienestar que puede crecer hacia múltiples formatos y canales.</p>
+            <h2 class="s-title">Ideas que sí podemos<br>llevar a producción</h2>
+            <p class="s-sub">Antes de saltar a productos totalmente distintos, la marca puede crecer aprovechando las mismas recetas, ingredientes y equipos. Así, cada nueva propuesta puede probarse sin elevar innecesariamente la inversión inicial.</p>
           </div>
           <div class="timeline">
             <div class="tl-item rv">
               <div class="tl-num">1</div>
               <div class="tl-bd">
                 <span class="tl-lbl">Etapa actual</span>
-                <h4>NutriCake base</h4>
-                <p>Versión inicial del queque nutritivo para pruebas de sabor, empaque y aceptación en el mercado local.</p>
+                <h4>Línea de tres sabores</h4>
+                <p>Original, Chocolate y Banano como catálogo inicial para validar demanda, preferencia de sabor y frecuencia de recompra.</p>
               </div>
             </div>
             <div class="tl-item rv d1">
               <div class="tl-num">2</div>
               <div class="tl-bd">
-                <span class="tl-lbl">Próxima etapa</span>
-                <h4>Gomitas nutritivas</h4>
-                <p>Una nueva alternativa práctica y atractiva para ampliar el catálogo con formatos divertidos para todas las edades.</p>
+                <span class="tl-lbl">Nuevo formato</span>
+                <h4>Mini NutriCakes y cajas mixtas</h4>
+                <p>Porciones pequeñas en cajas de 6 y 12 unidades para degustaciones, loncheras, reuniones y ventas institucionales.</p>
               </div>
             </div>
             <div class="tl-item rv d2">
               <div class="tl-num">3</div>
               <div class="tl-bd">
-                <span class="tl-lbl">Visión futura</span>
-                <h4>Pastillas y formatos funcionales</h4>
-                <p>Línea adicional con presentaciones innovadoras orientadas a un público adulto, activo y consciente de su salud.</p>
+                <span class="tl-lbl">Edición especial</span>
+                <h4>NutriCake Choco-Banano</h4>
+                <p>Una combinación de dos sabores ya costeados para lanzar ediciones limitadas sin cambiar por completo el proceso productivo.</p>
+              </div>
+            </div>
+            <div class="tl-item rv d3">
+              <div class="tl-num">4</div>
+              <div class="tl-bd">
+                <span class="tl-lbl">Venta por encargo</span>
+                <h4>NutriCake Familiar</h4>
+                <p>Presentación grande para cumpleaños, reuniones y pedidos empresariales, con decoración sencilla y entrega coordinada.</p>
               </div>
             </div>
           </div>
@@ -1390,52 +1637,73 @@
       <div class="container">
         <div class="sw">
           <div class="s-hd">
-            <div class="s-tag">🛍️ Hazlo a tu medida</div>
-            <h2 class="s-title">Arma tu consulta<br>en pocos segundos</h2>
-            <p class="s-sub">Selecciona una presentación y una cantidad. Prepararemos el mensaje por ti para consultar disponibilidad, precio y fecha de entrega por WhatsApp.</p>
+            <div class="s-tag">🛍️ Pedido directo por WhatsApp</div>
+            <h2 class="s-title">Arma tu pedido<br>sin escribir todo a mano</h2>
+            <p class="s-sub">Elige sabor, presentación y modalidad de entrega. Calcularemos un total referencial y prepararemos el mensaje completo para enviarlo por WhatsApp.</p>
           </div>
 
           <div class="order-shell rv">
             <div class="order-fields">
               <div class="field">
-                <label>1. Elige la presentación</label>
-                <div class="choice-row" id="sizeChoices">
-                  <button class="choice selected" type="button" data-value="Individual">🧁 Individual</button>
-                  <button class="choice" type="button" data-value="Caja para compartir">📦 Caja</button>
-                  <button class="choice" type="button" data-value="Pedido para evento">🎉 Evento</button>
+                <label>1. Elige el sabor</label>
+                <div class="choice-row four" id="productChoices">
+                  <button class="choice selected" type="button" data-value="original">🌾 Original</button>
+                  <button class="choice" type="button" data-value="chocolate">🍫 Chocolate</button>
+                  <button class="choice" type="button" data-value="banano">🍌 Banano</button>
+                  <button class="choice" type="button" data-value="mixto">🎁 Mixto</button>
                 </div>
               </div>
               <div class="field">
-                <label>2. Elige el motivo</label>
-                <div class="choice-row" id="purposeChoices">
-                  <button class="choice selected" type="button" data-value="Probar el producto">✨ Probar</button>
-                  <button class="choice" type="button" data-value="Compartir en familia">🏠 Compartir</button>
-                  <button class="choice" type="button" data-value="Solicitar una degustación">🤝 Degustación</button>
+                <label>2. Elige la presentación</label>
+                <div class="choice-row" id="packChoices">
+                  <button class="choice selected" type="button" data-value="unit">🧁 1 unidad</button>
+                  <button class="choice" type="button" data-value="box6">📦 Caja x6</button>
+                  <button class="choice" type="button" data-value="box12">🏠 Caja x12</button>
                 </div>
               </div>
               <div class="field">
-                <label>3. Cantidad aproximada</label>
+                <label>3. Cantidad de unidades o cajas</label>
                 <div class="qty-control">
                   <button type="button" id="qtyMinus" aria-label="Disminuir cantidad">−</button>
                   <output id="qtyOutput" aria-live="polite">1</output>
                   <button type="button" id="qtyPlus" aria-label="Aumentar cantidad">+</button>
                 </div>
               </div>
+              <div class="field">
+                <label>4. ¿Cómo deseas recibirlo?</label>
+                <div class="choice-row" id="deliveryChoices">
+                  <button class="choice selected" type="button" data-value="Recojo coordinado">🏪 Recojo</button>
+                  <button class="choice" type="button" data-value="Delivery en Piura">🛵 Delivery</button>
+                  <button class="choice" type="button" data-value="Entrega para evento">🎉 Evento</button>
+                </div>
+              </div>
+              <div class="field">
+                <label for="customerName">5. Datos opcionales para completar el mensaje</label>
+                <div class="input-grid">
+                  <input class="text-input" id="customerName" type="text" maxlength="45" placeholder="Tu nombre">
+                  <input class="text-input" id="deliveryZone" type="text" maxlength="60" placeholder="Distrito o zona de entrega">
+                </div>
+              </div>
             </div>
 
             <aside class="order-summary">
               <div>
-                <div class="summary-label">Tu consulta</div>
-                <div class="summary-product" id="summaryProduct">NutriCake individual</div>
-                <div class="summary-meta" id="summaryMeta">1 unidad · Para probar el producto</div>
+                <div class="summary-label">Resumen de tu pedido</div>
+                <div class="summary-product" id="summaryProduct">NutriCake Original</div>
+                <div class="summary-meta" id="summaryMeta">1 unidad · Recojo coordinado</div>
+                <div class="summary-total">
+                  <span>Total referencial</span>
+                  <strong id="summaryTotal">S/ 10,00</strong>
+                  <small>El delivery se cotiza según la zona.</small>
+                </div>
               </div>
               <div>
                 <a class="btn-wa" id="orderButton"
-                   href="https://wa.me/51939945852?text=Hola%2C%20quisiera%20consultar%20por%201%20NutriCake%20individual."
+                   href="https://wa.me/51939945852?text=Hola%2C%20quisiera%20pedir%201%20NutriCake%20Original."
                    target="_blank" rel="noopener">
-                  Consultar por WhatsApp
+                  Enviar pedido por WhatsApp
                 </a>
-                <p class="microcopy">La consulta no confirma una compra. Te responderemos con disponibilidad y detalles.</p>
+                <p class="microcopy">El pedido queda sujeto a confirmación de disponibilidad, fecha de preparación y costo de entrega.</p>
               </div>
             </aside>
           </div>
@@ -1456,9 +1724,9 @@
           <div class="faq-list">
             <div class="faq-item open">
               <button class="faq-q" type="button" aria-expanded="true">
-                <span>¿NutriCake ya está disponible para venta permanente?</span><span>+</span>
+                <span>¿Cómo realizo un pedido?</span><span>+</span>
               </button>
-              <div class="faq-a"><div><p>El producto se encuentra en etapa de validación. Puedes escribirnos para conocer las degustaciones, lotes piloto o actividades disponibles en este momento.</p></div></div>
+              <div class="faq-a"><div><p>Elige un sabor, presentación, cantidad y modalidad de entrega en la sección de pedidos. Al presionar el botón verde se abrirá WhatsApp con el mensaje completo para que confirmemos disponibilidad y fecha.</p></div></div>
             </div>
             <div class="faq-item">
               <button class="faq-q" type="button" aria-expanded="false">
@@ -1480,9 +1748,15 @@
             </div>
             <div class="faq-item">
               <button class="faq-q" type="button" aria-expanded="false">
+                <span>¿Los precios incluyen delivery?</span><span>+</span>
+              </button>
+              <div class="faq-a"><div><p>No. El precio mostrado corresponde al producto. El costo de delivery se calcula según el distrito o zona y se confirma antes de cerrar el pedido.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" type="button" aria-expanded="false">
                 <span>¿Pueden preparar pedidos para colegios o eventos?</span><span>+</span>
               </button>
-              <div class="faq-a"><div><p>Podemos evaluar degustaciones y pedidos piloto según cantidad, fecha y disponibilidad. Para una distribución institucional se deberán completar primero las validaciones y autorizaciones correspondientes.</p></div></div>
+              <div class="faq-a"><div><p>Sí, se pueden coordinar cajas mixtas, degustaciones y pedidos especiales según cantidad, fecha y disponibilidad. Los pedidos grandes deben solicitarse con anticipación.</p></div></div>
             </div>
           </div>
         </div>
@@ -1633,6 +1907,7 @@
           <h5>Navegación</h5>
           <ul>
             <li><a href="#historia">Nuestra idea</a></li>
+            <li><a href="#productos">Productos y precios</a></li>
             <li><a href="#ingredientes">Ingredientes</a></li>
             <li><a href="#problema">Problema</a></li>
             <li><a href="#propuesta">Propuesta</a></li>
@@ -1647,10 +1922,11 @@
         <div class="f-col">
           <h5>Producto</h5>
           <ul>
+            <li><a href="#productos">NutriCake Original</a></li>
+            <li><a href="#productos">NutriCake Chocolate</a></li>
+            <li><a href="#productos">NutriCake Banano</a></li>
             <li><a href="#ingredientes">Lista de ingredientes</a></li>
-            <li><a href="#propuesta">Beneficios</a></li>
-            <li><a href="#pedido">Armar una consulta</a></li>
-            <li><a href="#futuro">Próximos productos</a></li>
+            <li><a href="#pedido">Armar un pedido</a></li>
           </ul>
         </div>
 
@@ -1772,17 +2048,52 @@
   });
 
   // ─── ORDER BUILDER ───────────────────────────────────────
-  let selectedSize = 'Individual';
-  let selectedPurpose = 'Probar el producto';
+  const productCatalog = {
+    original: {
+      name: 'NutriCake Original',
+      prices: { unit: 10, box6: 57, box12: 108 }
+    },
+    chocolate: {
+      name: 'NutriCake Chocolate',
+      prices: { unit: 9, box6: 51, box12: 97 }
+    },
+    banano: {
+      name: 'NutriCake Banano',
+      prices: { unit: 7.5, box6: 42, box12: 81 }
+    },
+    mixto: {
+      name: 'Pack mixto NutriCake',
+      prices: { unit: null, box6: 50, box12: 96 }
+    }
+  };
+  const packCatalog = {
+    unit: { label: 'Unidad individual', units: 1, noun: 'unidad' },
+    box6: { label: 'Caja de 6 unidades', units: 6, noun: 'caja' },
+    box12: { label: 'Caja de 12 unidades', units: 12, noun: 'caja' }
+  };
+  const money = new Intl.NumberFormat('es-PE', {
+    style: 'currency',
+    currency: 'PEN',
+    minimumFractionDigits: 2
+  });
+
+  let selectedProduct = 'original';
+  let selectedPack = 'unit';
+  let selectedDelivery = 'Recojo coordinado';
   let quantity = 1;
   const qtyOutput = document.getElementById('qtyOutput');
   const summaryProduct = document.getElementById('summaryProduct');
   const summaryMeta = document.getElementById('summaryMeta');
+  const summaryTotal = document.getElementById('summaryTotal');
   const orderButton = document.getElementById('orderButton');
+  const customerName = document.getElementById('customerName');
+  const deliveryZone = document.getElementById('deliveryZone');
+  const unitChoice = document.querySelector('#packChoices [data-value="unit"]');
 
   function bindChoices(groupId, setter) {
     document.querySelectorAll(`#${groupId} .choice`).forEach(choice => {
       choice.addEventListener('click', () => {
+        if (choice.disabled) return;
         document.querySelectorAll(`#${groupId} .choice`).forEach(c => c.classList.remove('selected'));
         choice.classList.add('selected');
         setter(choice.dataset.value);
@@ -1790,16 +2101,48 @@
       });
     });
   }
-  bindChoices('sizeChoices', value => selectedSize = value);
-  bindChoices('purposeChoices', value => selectedPurpose = value);
+  bindChoices('productChoices', value => {
+    selectedProduct = value;
+    if (selectedProduct === 'mixto' && selectedPack === 'unit') {
+      selectedPack = 'box6';
+      document.querySelectorAll('#packChoices .choice').forEach(c => {
+        c.classList.toggle('selected', c.dataset.value === 'box6');
+      });
+    }
+  });
+  bindChoices('packChoices', value => selectedPack = value);
+  bindChoices('deliveryChoices', value => selectedDelivery = value);
 
   function updateOrder() {
-    const sizeLabel = selectedSize.toLowerCase();
+    const product = productCatalog[selectedProduct];
+    const pack = packCatalog[selectedPack];
+    const totalUnits = pack.units * quantity;
+    const price = product.prices[selectedPack] * quantity;
+    const quantityLabel = selectedPack === 'unit'
+      ? `${quantity} ${quantity === 1 ? 'unidad' : 'unidades'}`
+      : `${quantity} ${quantity === 1 ? 'caja' : 'cajas'} · ${totalUnits} unidades`;
+    const buyer = customerName.value.trim();
+    const zone = deliveryZone.value.trim();
+
+    unitChoice.disabled = selectedProduct === 'mixto';
     qtyOutput.value = quantity;
     qtyOutput.textContent = quantity;
-    summaryProduct.textContent = `NutriCake · ${selectedSize}`;
-    summaryMeta.textContent = `${quantity} ${quantity === 1 ? 'unidad' : 'unidades'} · ${selectedPurpose}`;
-    const message = `Hola, quisiera consultar por ${quantity} ${quantity === 1 ? 'unidad' : 'unidades'} de NutriCake en presentación ${sizeLabel}. Motivo: ${selectedPurpose}. ¿Podrían indicarme disponibilidad y precio?`;
+    summaryProduct.textContent = product.name;
+    summaryMeta.textContent = `${quantityLabel} · ${selectedDelivery}`;
+    summaryTotal.textContent = money.format(price);
+
+    const message = [
+      `Hola${buyer ? `, soy ${buyer}` : ''}. Quisiera realizar el siguiente pedido de NutriCake:`,
+      '',
+      `Producto: ${product.name}`,
+      `Presentación: ${pack.label}`,
+      `Cantidad: ${quantityLabel}`,
+      `Total referencial: ${money.format(price)}`,
+      `Modalidad: ${selectedDelivery}`,
+      zone ? `Zona o distrito: ${zone}` : null,
+      '',
+      '¿Podrían confirmarme la disponibilidad, fecha de preparación y costo de entrega?'
+    ].filter(line => line !== null).join('\n');
     orderButton.href = `https://wa.me/51939945852?text=${encodeURIComponent(message)}`;
   }
   document.getElementById('qtyMinus').addEventListener('click', () => {
@@ -1807,8 +2150,26 @@
     updateOrder();
   });
   document.getElementById('qtyPlus').addEventListener('click', () => {
-    quantity = Math.min(100, quantity + 1);
+    quantity = Math.min(30, quantity + 1);
     updateOrder();
+  });
+  customerName.addEventListener('input', updateOrder);
+  deliveryZone.addEventListener('input', updateOrder);
+
+  document.querySelectorAll('.quick-order').forEach(button => {
+    button.addEventListener('click', () => {
+      selectedProduct = button.dataset.product;
+      selectedPack = 'unit';
+      quantity = 1;
+      document.querySelectorAll('#productChoices .choice').forEach(choice => {
+        choice.classList.toggle('selected', choice.dataset.value === selectedProduct);
+      });
+      document.querySelectorAll('#packChoices .choice').forEach(choice => {
+        choice.classList.toggle('selected', choice.dataset.value === selectedPack);
+      });
+      updateOrder();
+      document.getElementById('pedido').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   });
   updateOrder();
 
