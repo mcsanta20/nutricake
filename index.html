@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NutriCake: queque nutritivo con ingredientes seleccionados y una propuesta innovadora para incorporar hierro de una forma práctica y agradable." />
+  <meta name="theme-color" content="#B33B1E" />
   <title>NutriCake | Energía y nutrición en cada porción</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
 
@@ -25,6 +27,7 @@
       --shadow-s: 0 8px 24px rgba(50,18,2,.08);
       --r:        28px;
       --r-s:      18px;
+      --nav-h:    79px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -32,9 +35,22 @@
       font-family:'Plus Jakarta Sans',system-ui,sans-serif;
       color:var(--text);background:var(--bg);
       overflow-x:hidden;
+      transition:background .3s,color .3s;
     }
+    body.menu-open{overflow:hidden}
+    ::selection{background:rgba(179,59,30,.22);color:var(--text)}
+    button,input,select,textarea{font:inherit}
+    button{color:inherit}
+    :focus-visible{outline:3px solid rgba(212,120,42,.45);outline-offset:4px}
     a{color:inherit;text-decoration:none}
     .container{width:min(1180px,calc(100% - 40px));margin:0 auto}
+    section[id]{scroll-margin-top:calc(var(--nav-h) + 18px)}
+    .skip-link{
+      position:fixed;top:10px;left:12px;z-index:500;
+      padding:11px 16px;border-radius:12px;background:var(--text);color:var(--bg);
+      transform:translateY(-150%);transition:transform .2s;
+    }
+    .skip-link:focus{transform:translateY(0)}
 
     /* ─── PROGRESS BAR ───────────────────── */
     #progress-bar{
@@ -73,9 +89,10 @@
       letter-spacing:-.03em;position:relative;overflow:hidden;
     }
     .brand-logo img{
-      width:100%;height:100%;object-fit:contain;
-      object-position:center;
+      position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+      object-position:center;z-index:2;
     }
+    .logo-fallback{position:relative;z-index:1}
     .brand-logo::after{
       content:'';position:absolute;inset:0;
       background:linear-gradient(135deg,rgba(255,255,255,.22),transparent 60%);
@@ -102,7 +119,15 @@
     }
     .nav-links a:hover{color:var(--primary)}
     .nav-links a:hover::after{width:100%}
+    .nav-links a.active{color:var(--primary)}
+    .nav-links a.active::after{width:100%}
     .nav-actions{display:flex;gap:10px;align-items:center}
+    .theme-toggle{
+      width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+      border:1px solid var(--line);background:rgba(255,255,255,.72);
+      cursor:pointer;transition:transform .2s,background .2s;
+    }
+    .theme-toggle:hover{transform:rotate(8deg) translateY(-1px)}
     .nav-cta{
       padding:11px 20px;border-radius:999px;
       background:linear-gradient(135deg,var(--primary),var(--secondary));
@@ -260,6 +285,18 @@
       font-family:'Syne',sans-serif;font-size:.55rem;font-weight:900;
       color:rgba(255,255,255,.82);letter-spacing:.12em;text-transform:uppercase;
     }
+    .iron-badge{
+      position:absolute;right:2px;bottom:22px;z-index:4;
+      width:94px;height:94px;border-radius:28px;
+      display:grid;place-items:center;text-align:center;
+      color:#fff;background:linear-gradient(145deg,#8f2e1a,#c85c2d);
+      border:5px solid #fff;box-shadow:0 16px 34px rgba(120,35,14,.3);
+      transform:rotate(7deg);font-size:.67rem;font-weight:700;line-height:1.25;
+    }
+    .iron-badge strong{
+      display:block;font-family:'Syne',sans-serif;
+      font-size:1.15rem;line-height:1;margin-bottom:3px;
+    }
     .float-dot{
       position:absolute;border-radius:50%;
       top:50%;left:50%;
@@ -341,6 +378,16 @@
       font-weight:700;margin-bottom:8px;
     }
     .card p{color:var(--muted);line-height:1.7;font-size:.94rem}
+    .card-list{list-style:none;display:grid;gap:10px;margin-top:16px}
+    .card-list li{
+      display:flex;gap:10px;align-items:flex-start;color:var(--muted);
+      font-size:.9rem;line-height:1.55;
+    }
+    .card-list li::before{
+      content:'✓';display:grid;place-items:center;flex:0 0 22px;height:22px;
+      border-radius:50%;background:rgba(74,122,70,.12);color:var(--accent);
+      font-size:.72rem;font-weight:900;
+    }
 
     /* ─── PROBLEMA ITEMS ─────────────────── */
     .p-list{display:grid;gap:12px;margin-top:16px}
@@ -463,6 +510,187 @@
       font-size:.82rem;font-weight:700;
       border:1px solid rgba(74,122,70,.16);
     }
+
+    /* ─── VALUE STRIP ────────────────────── */
+    .value-strip{
+      margin:6px auto 20px;border-block:1px solid var(--line);
+      background:rgba(255,255,255,.55);overflow:hidden;
+    }
+    .value-track{
+      width:max-content;display:flex;align-items:center;gap:18px;
+      padding:15px 0;animation:marquee 26s linear infinite;
+      font-family:'Syne',sans-serif;font-weight:700;font-size:.84rem;
+      color:var(--muted);text-transform:uppercase;letter-spacing:.05em;
+    }
+    .value-track span{display:flex;align-items:center;gap:18px;white-space:nowrap}
+    .value-track span::after{content:'✦';color:var(--secondary)}
+    @keyframes marquee{to{transform:translateX(-50%)}}
+
+    /* ─── STORY / TRANSPARENCY ───────────── */
+    .story-grid{
+      display:grid;grid-template-columns:.9fr 1.1fr;gap:22px;align-items:stretch;
+    }
+    .story-visual{
+      min-height:430px;border-radius:26px;position:relative;overflow:hidden;
+      background:
+        radial-gradient(circle at 26% 24%,rgba(255,255,255,.34),transparent 22%),
+        linear-gradient(145deg,#6f2214 0%,#b84221 48%,#dd8b3f 100%);
+      color:#fff;padding:34px;display:flex;flex-direction:column;justify-content:space-between;
+    }
+    .story-visual::before,.story-visual::after{
+      content:'';position:absolute;border:1px solid rgba(255,255,255,.18);
+      border-radius:50%;
+    }
+    .story-visual::before{width:300px;height:300px;right:-120px;top:-100px}
+    .story-visual::after{width:220px;height:220px;left:-100px;bottom:-90px}
+    .story-kicker{
+      position:relative;z-index:1;align-self:flex-start;
+      padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.13);
+      border:1px solid rgba(255,255,255,.2);font-size:.78rem;font-weight:700;
+    }
+    .story-big{position:relative;z-index:1}
+    .story-big strong{
+      display:block;font-family:'Syne',sans-serif;font-size:clamp(3rem,7vw,5.8rem);
+      line-height:.84;letter-spacing:-.06em;
+    }
+    .story-big span{display:block;margin-top:14px;color:rgba(255,255,255,.72);line-height:1.55}
+    .story-copy{
+      padding:34px;border-radius:26px;background:#fff;border:1px solid var(--line);
+    }
+    .story-copy h3{
+      font-family:'Syne',sans-serif;font-size:1.55rem;line-height:1.15;margin-bottom:14px;
+    }
+    .story-copy>p{color:var(--muted);line-height:1.75}
+    .transparency-note{
+      margin-top:22px;padding:18px;border-radius:18px;
+      background:rgba(240,180,41,.11);border:1px solid rgba(240,180,41,.24);
+    }
+    .transparency-note strong{display:block;margin-bottom:6px;color:#7a4b00}
+    .transparency-note p{font-size:.88rem;line-height:1.65;color:var(--muted)}
+
+    /* ─── AUDIENCE ───────────────────────── */
+    .audience-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .audience-card{
+      padding:24px 20px;border-radius:22px;background:#fff;border:1px solid var(--line);
+      position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;
+    }
+    .audience-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+    .audience-card::after{
+      content:'';position:absolute;width:90px;height:90px;border-radius:50%;
+      right:-44px;bottom:-44px;background:var(--aud,rgba(212,120,42,.1));
+    }
+    .audience-ico{font-size:2rem;margin-bottom:14px}
+    .audience-card h3{font-family:'Syne',sans-serif;font-size:1rem;margin-bottom:8px}
+    .audience-card p{font-size:.86rem;line-height:1.6;color:var(--muted)}
+
+    /* ─── PROCESS ────────────────────────── */
+    .process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+    .process-step{padding:8px 22px 22px;position:relative}
+    .process-step:not(:last-child)::after{
+      content:'→';position:absolute;right:-7px;top:21px;color:var(--secondary);
+      font-size:1.25rem;font-weight:900;
+    }
+    .process-num{
+      width:46px;height:46px;border-radius:16px;display:grid;place-items:center;
+      margin-bottom:16px;background:var(--soft);color:var(--primary);
+      font-family:'Syne',sans-serif;font-weight:900;
+    }
+    .process-step h3{font-family:'Syne',sans-serif;font-size:1rem;margin-bottom:8px}
+    .process-step p{color:var(--muted);font-size:.87rem;line-height:1.62}
+
+    /* ─── ORDER BUILDER ──────────────────── */
+    .order-shell{
+      display:grid;grid-template-columns:1fr .84fr;gap:22px;
+      background:linear-gradient(145deg,#fff,#fff6e9);
+      border:1px solid var(--line);border-radius:30px;padding:30px;
+    }
+    .order-fields{display:grid;gap:18px}
+    .field label{display:block;font-weight:700;font-size:.87rem;margin-bottom:8px}
+    .choice-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+    .choice{
+      border:1px solid var(--line);border-radius:15px;background:#fff;
+      padding:13px 10px;text-align:center;cursor:pointer;font-weight:700;font-size:.84rem;
+      transition:.2s;
+    }
+    .choice:hover,.choice.selected{
+      border-color:var(--primary);color:var(--primary);
+      background:rgba(179,59,30,.06);box-shadow:0 0 0 3px rgba(179,59,30,.07);
+    }
+    .qty-control{
+      width:max-content;display:flex;align-items:center;gap:4px;padding:5px;
+      border:1px solid var(--line);border-radius:15px;background:#fff;
+    }
+    .qty-control button{
+      width:38px;height:38px;border:none;border-radius:11px;background:var(--soft);
+      cursor:pointer;font-weight:900;font-size:1.1rem;
+    }
+    .qty-control output{width:44px;text-align:center;font-weight:800}
+    .order-summary{
+      border-radius:24px;padding:26px;color:#fff;
+      background:linear-gradient(145deg,#2f1105,#6a270d);
+      display:flex;flex-direction:column;justify-content:space-between;gap:26px;
+      position:relative;overflow:hidden;
+    }
+    .order-summary::after{
+      content:'';position:absolute;width:220px;height:220px;border-radius:50%;
+      background:radial-gradient(circle,rgba(240,180,41,.2),transparent 68%);
+      right:-80px;bottom:-80px;
+    }
+    .summary-label{font-size:.77rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.54)}
+    .summary-product{font-family:'Syne',sans-serif;font-size:1.5rem;margin:7px 0 5px}
+    .summary-meta{color:rgba(255,255,255,.64);font-size:.9rem;line-height:1.55}
+    .order-summary .btn-wa{position:relative;z-index:1;justify-content:center;width:100%}
+    .microcopy{font-size:.75rem;color:rgba(255,255,255,.48);line-height:1.45;text-align:center}
+
+    /* ─── FAQ ────────────────────────────── */
+    .faq-list{display:grid;gap:11px}
+    .faq-item{border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden}
+    .faq-q{
+      width:100%;border:none;background:transparent;padding:20px 22px;
+      display:flex;justify-content:space-between;gap:18px;text-align:left;
+      cursor:pointer;font-weight:800;
+    }
+    .faq-q span:last-child{color:var(--primary);font-size:1.25rem;transition:transform .25s}
+    .faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+    .faq-a>div{overflow:hidden}
+    .faq-a p{padding:0 22px 20px;color:var(--muted);line-height:1.7;font-size:.91rem}
+    .faq-item.open .faq-a{grid-template-rows:1fr}
+    .faq-item.open .faq-q span:last-child{transform:rotate(45deg)}
+
+    /* ─── FLOAT ACTIONS ──────────────────── */
+    .floating-actions{
+      position:fixed;right:20px;bottom:20px;z-index:70;
+      display:flex;flex-direction:column;align-items:flex-end;gap:10px;
+    }
+    .float-wa{
+      display:flex;align-items:center;gap:9px;padding:13px 17px;border-radius:999px;
+      background:#25d366;color:#fff;box-shadow:0 12px 32px rgba(37,211,102,.35);
+      font-weight:800;font-size:.86rem;
+    }
+    .to-top{
+      width:42px;height:42px;border-radius:14px;border:1px solid var(--line);
+      background:var(--card);backdrop-filter:blur(10px);cursor:pointer;
+      opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s;
+    }
+    .to-top.show{opacity:1;transform:none;pointer-events:auto}
+
+    /* ─── DARK MODE ──────────────────────── */
+    body.dark{
+      --bg:#160c07;--card:rgba(35,20,13,.93);--text:#fff7ed;--muted:#c7aa95;
+      --soft:#382116;--line:rgba(255,190,128,.12);
+      --shadow:0 24px 60px rgba(0,0,0,.32);--shadow-s:0 8px 24px rgba(0,0,0,.22);
+    }
+    body.dark .nav{background:rgba(22,12,7,.86)}
+    body.dark .mobile-menu{background:rgba(22,12,7,.97)}
+    body.dark .theme-toggle,body.dark .trust-badge,body.dark .stat-c,
+    body.dark .hero-card,body.dark .card,body.dark .p-item,body.dark .ing-card,
+    body.dark .tl-item,body.dark .audience-card,body.dark .story-copy,
+    body.dark .faq-item,body.dark .choice,body.dark .qty-control{background:#25150e}
+    body.dark .pinfo{background:rgba(22,12,7,.78)}
+    body.dark .team-card{background:#3a2417}
+    body.dark .value-strip{background:rgba(25,14,8,.66)}
+    body.dark .order-shell{background:linear-gradient(145deg,#24140d,#1b0e08)}
+    body.dark .transparency-note strong{color:#f3c56a}
 
     /* ─── CONTACTO / SOCIAL ──────────────── */
     .social-section{
@@ -607,30 +835,48 @@
     @media(max-width:1024px){
       .soc-grid{grid-template-columns:repeat(2,1fr)}
       .footer-main{grid-template-columns:1fr 1fr}
+      .audience-grid{grid-template-columns:repeat(2,1fr)}
+      .process-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+      .process-step:nth-child(2)::after{display:none}
     }
     @media(max-width:768px){
-      .hero-grid,.g2,.g3,.ing-grid,.stats-row{grid-template-columns:1fr}
+      .hero-grid,.g2,.g3,.ing-grid,.stats-row,.story-grid,.order-shell{grid-template-columns:1fr}
       .nav-links{display:none}
       .hamburger{display:flex}
+      .nav-cta{display:none}
       .hero{padding:48px 0 36px}
       .sw{padding:28px 20px}
       .soc-grid{grid-template-columns:repeat(2,1fr)}
       .footer-main{grid-template-columns:1fr 1fr;gap:32px}
       .social-section{padding:40px 24px}
-
+      .story-visual{min-height:360px}
+      .iron-badge{right:-4px;bottom:10px}
+      .float-wa span{display:none}
+      .float-wa{width:50px;height:50px;padding:0;justify-content:center}
+      .choice-row{grid-template-columns:1fr}
     }
     @media(max-width:540px){
       .ing-grid{grid-template-columns:1fr}
       .pill-g{grid-template-columns:1fr}
       .footer-main{grid-template-columns:1fr}
+      .audience-grid,.process-grid{grid-template-columns:1fr}
+      .process-step::after{display:none!important}
+      .brand-tag{display:none}
+      .container{width:min(100% - 26px,1180px)}
+      .hero-card{padding:20px}
+      .story-copy,.story-visual,.order-shell{padding:22px}
+      .social-section{padding:34px 20px}
+      .soc-card{padding:20px 12px}
     }
     @media(prefers-reduced-motion:reduce){
       *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+      .value-track{animation:none}
     }
   </style>
 </head>
 <body>
 
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <div id="progress-bar"></div>
   <canvas id="bg-canvas"></canvas>
 
@@ -639,7 +885,10 @@
     <div class="container nav-inner">
 
       <div class="brand">
-        <div class="brand-logo"><img src="img/logo1.png" alt="NutriCake Logo"></div>
+        <div class="brand-logo">
+          <span class="logo-fallback">NC</span>
+          <img src="img/logo1.png" alt="Logo de NutriCake" onerror="this.remove()">
+        </div>
         <div class="brand-text">
           <div class="brand-name">NutriCake</div>
           <div class="brand-tag">Energía &amp; nutrición</div>
@@ -647,37 +896,42 @@
       </div>
 
       <nav class="nav-links" aria-label="Principal">
+        <a href="#historia">Nuestra idea</a>
         <a href="#ingredientes">Ingredientes</a>
-        <a href="#problema">Problema</a>
-        <a href="#propuesta">Propuesta</a>
-        <a href="#equipo">Equipo</a>
-        <a href="#contacto">Contacto</a>
+        <a href="#propuesta">Beneficios</a>
+        <a href="#pedido">Pedidos</a>
+        <a href="#faq">Preguntas</a>
       </nav>
 
       <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
         <a class="nav-cta"
            href="https://wa.me/51939945852?text=Hola%20quiero%20informaci%C3%B3n%20sobre%20NutriCake"
            target="_blank" rel="noopener">
           💬 Pedir ahora
         </a>
-        <button class="hamburger" id="hbg" aria-label="Menú">
+        <button class="hamburger" id="hbg" type="button" aria-label="Abrir menú" aria-controls="mob" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
 
     <div class="mobile-menu" id="mob">
+      <a href="#historia"     onclick="closeMob()">❤️ Nuestra idea</a>
       <a href="#ingredientes" onclick="closeMob()">🥄 Ingredientes</a>
       <a href="#problema"     onclick="closeMob()">⚠️ Problema</a>
       <a href="#propuesta"    onclick="closeMob()">✨ Propuesta</a>
+      <a href="#publico"      onclick="closeMob()">👨‍👩‍👧 Para quién</a>
       <a href="#mvp"          onclick="closeMob()">🧪 MVP</a>
       <a href="#equipo"       onclick="closeMob()">👥 Equipo</a>
       <a href="#futuro"       onclick="closeMob()">🚀 Futuro</a>
+      <a href="#pedido"       onclick="closeMob()">🛍️ Armar pedido</a>
+      <a href="#faq"          onclick="closeMob()">❓ Preguntas</a>
       <a href="#contacto"     onclick="closeMob()">📲 Contacto</a>
     </div>
   </header>
 
-  <main>
+  <main id="contenido">
 
     <!-- ────────────────────────────────────── HERO -->
     <section class="hero">
@@ -686,14 +940,14 @@
         <div>
           <div class="eyebrow">🌿 Nutrición que se ve y se siente</div>
           <h1>
-            <span class="h1-block">El queque que</span>
-            <span class="h1-block h1-accent">nutre de verdad</span>
-            <span class="h1-block">cada día.</span>
+            <span class="h1-block">Sabor que</span>
+            <span class="h1-block h1-accent">alimenta una idea</span>
+            <span class="h1-block">con propósito.</span>
           </h1>
           <p class="hero-desc">
-            NutriCake nace para cambiar la forma en que comes bien. Una propuesta saludable,
-            deliciosa e innovadora que combina ingredientes naturales con una presentación
-            que llama la atención y genera confianza real.
+            NutriCake transforma un queque cotidiano en una alternativa nutritiva y práctica.
+            Nuestra propuesta combina cacao, cereales andinos e hierro de origen aviar,
+            trabajado para conservar un sabor agradable y una presentación que inspira confianza.
           </p>
           <div class="actions">
             <a class="btn btn-primary"
@@ -702,14 +956,14 @@
             <a class="btn btn-outline" href="#ingredientes">Ver ingredientes</a>
           </div>
           <div class="trust-row">
-            <span class="trust-badge"><span class="tdot"></span>100% ingredientes naturales</span>
-            <span class="trust-badge"><span class="tdot" style="background:var(--secondary)"></span>Sin conservantes artificiales</span>
-            <span class="trust-badge"><span class="tdot" style="background:var(--gold)"></span>Rico en hierro y vitaminas</span>
+            <span class="trust-badge"><span class="tdot"></span>Ingredientes seleccionados</span>
+            <span class="trust-badge"><span class="tdot" style="background:var(--secondary)"></span>Receta en validación</span>
+            <span class="trust-badge"><span class="tdot" style="background:var(--gold)"></span>Propuesta con aporte de hierro</span>
           </div>
           <div class="stats-row">
-            <div class="stat-c rv"><strong>Saludable</strong><span>Avena, quinua y plátano en cada porción.</span></div>
-            <div class="stat-c rv d1"><strong>Nutritivo</strong><span>Enriquecido con hierro y vitaminas esenciales.</span></div>
-            <div class="stat-c rv d2"><strong>Innovador</strong><span>Base para una marca de bienestar en crecimiento.</span></div>
+            <div class="stat-c rv"><strong>Sabor familiar</strong><span>Cacao y textura suave para disfrutarlo sin complicaciones.</span></div>
+            <div class="stat-c rv d1"><strong>Propósito claro</strong><span>Acercar una alternativa con hierro a la alimentación diaria.</span></div>
+            <div class="stat-c rv d2"><strong>Origen local</strong><span>Una idea desarrollada por jóvenes emprendedores de Piura.</span></div>
           </div>
         </div>
 
@@ -723,15 +977,61 @@
                 <span class="cake-txt">NutriCake</span>
               </div>
             </div>
+            <div class="iron-badge"><span><strong>Fe</strong>Hierro con propósito</span></div>
           </div>
           <div class="pinfo-grid">
-            <div class="pinfo"><strong>🌾 Ingredientes</strong><span>Avena, quinua, harina integral y cacao.</span></div>
-            <div class="pinfo"><strong>📦 Presentación</strong><span>Individual y familiar, empaque atractivo.</span></div>
-            <div class="pinfo"><strong>💪 Beneficio</strong><span>Apoya una dieta nutritiva y equilibrada.</span></div>
+            <div class="pinfo"><strong>🌾 Ingredientes</strong><span>Avena, quinua, cacao e ingrediente hemínico aviar.</span></div>
+            <div class="pinfo"><strong>📦 Presentación</strong><span>Individual, caja para compartir y pedidos especiales.</span></div>
+            <div class="pinfo"><strong>💪 Propósito</strong><span>Complementar una alimentación variada con una opción práctica.</span></div>
             <div class="pinfo"><strong>💛 Slogan</strong><span>"Energía y nutrición en cada porción"</span></div>
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <div class="value-strip" aria-hidden="true">
+      <div class="value-track">
+        <span>Sabor agradable</span><span>Hierro con propósito</span><span>Ingredientes locales</span><span>Emprendimiento piurano</span><span>Presentación práctica</span>
+        <span>Sabor agradable</span><span>Hierro con propósito</span><span>Ingredientes locales</span><span>Emprendimiento piurano</span><span>Presentación práctica</span>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────────────── HISTORIA -->
+    <section class="section" id="historia">
+      <div class="container">
+        <div class="sw">
+          <div class="s-hd">
+            <div class="s-tag">❤️ La idea detrás del producto</div>
+            <h2 class="s-title">No queríamos crear<br>otro queque más</h2>
+            <p class="s-sub">Queríamos convertir un alimento conocido y querido en un vehículo práctico para incorporar mejores ingredientes, sin sacrificar la experiencia de comer algo rico.</p>
+          </div>
+
+          <div class="story-grid">
+            <div class="story-visual rv">
+              <span class="story-kicker">De Piura para más familias</span>
+              <div class="story-big">
+                <strong>Rico.<br>Útil.<br>Nuestro.</strong>
+                <span>Una receta que une tradición, innovación alimentaria y ganas de emprender.</span>
+              </div>
+            </div>
+
+            <div class="story-copy rv d1">
+              <h3>Una propuesta honesta desde el primer bocado</h3>
+              <p>El elemento que diferencia a NutriCake es la incorporación de un ingrediente hemínico de origen aviar dentro de una receta de cacao. La formulación busca integrar su aporte de hierro sin convertirlo en el sabor dominante del producto.</p>
+              <ul class="card-list">
+                <li>El cacao ayuda a construir un perfil de sabor familiar y atractivo.</li>
+                <li>La avena, quinua y harina integral aportan textura y variedad de nutrientes.</li>
+                <li>El formato de queque facilita su consumo en casa, estudios o trabajo.</li>
+                <li>La presentación comunica con claridad qué contiene y cuál es su propósito.</li>
+              </ul>
+              <div class="transparency-note">
+                <strong>Transparencia antes que promesas exageradas</strong>
+                <p>NutriCake es un proyecto alimentario en etapa de validación. La composición final, tabla nutricional, vida útil y mensajes de salud deberán confirmarse mediante análisis técnico y los permisos sanitarios correspondientes antes de una comercialización formal.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -742,7 +1042,7 @@
           <div class="s-hd">
             <div class="s-tag">🥄 Lo que nos hace especiales</div>
             <h2 class="s-title">Ingredientes naturales,<br>beneficios reales</h2>
-            <p class="s-sub">Cada ingrediente fue elegido con un propósito claro: aportar energía, salud y sabor en una sola porción de NutriCake.</p>
+            <p class="s-sub">Cada componente cumple una función dentro de la receta: construir sabor, textura, energía y una propuesta de aporte de hierro que pueda disfrutarse de forma práctica.</p>
           </div>
           <div class="ing-grid">
 
@@ -750,7 +1050,7 @@
                  style="--ic:#8B4513;--ib:rgba(139,69,19,.1)">
               <span class="ing-em">🌾</span>
               <div class="ing-nm">Harina integral</div>
-              <div class="ing-be">Base nutritiva con mayor contenido de fibra que la harina refinada. Mejora la digestión y genera mayor saciedad.</div>
+              <div class="ing-be">Base de la receta y fuente de fibra. Ayuda a conseguir una miga consistente y un sabor equilibrado.</div>
               <span class="ing-tag">Fibra &amp; energía</span>
             </div>
 
@@ -758,7 +1058,7 @@
                  style="--ic:#c97d3f;--ib:rgba(201,125,63,.12)">
               <span class="ing-em">🌿</span>
               <div class="ing-nm">Avena</div>
-              <div class="ing-be">Rica en betaglucanos, proteínas y minerales. Reduce el colesterol y aporta energía sostenida durante el día.</div>
+              <div class="ing-be">Cereal versátil que suma fibra, textura y un perfil de sabor suave a la mezcla.</div>
               <span class="ing-tag">Proteína &amp; saciedad</span>
             </div>
 
@@ -766,7 +1066,7 @@
                  style="--ic:#3a1a0a;--ib:rgba(58,26,10,.1)">
               <span class="ing-em">🍫</span>
               <div class="ing-nm">Cacao puro</div>
-              <div class="ing-be">Fuente natural de hierro, magnesio y antioxidantes. Da el sabor característico y apoya la salud cardiovascular.</div>
+              <div class="ing-be">Aporta el sabor principal, el color característico y ayuda a integrar de manera agradable los demás componentes.</div>
               <span class="ing-tag">Hierro &amp; antioxidantes</span>
             </div>
 
@@ -774,7 +1074,7 @@
                  style="--ic:#c9940a;--ib:rgba(201,148,10,.12)">
               <span class="ing-em">🍌</span>
               <div class="ing-nm">Plátano maduro</div>
-              <div class="ing-be">Endulzante natural con potasio y vitamina B6. Reemplaza el azúcar refinado y aporta cremosidad natural.</div>
+              <div class="ing-be">Aporta dulzor, humedad y una textura suave, permitiendo reducir el uso de otros endulzantes en la formulación.</div>
               <span class="ing-tag">Potasio &amp; vitaminas</span>
             </div>
 
@@ -782,7 +1082,7 @@
                  style="--ic:#4a7a46;--ib:rgba(74,122,70,.12)">
               <span class="ing-em">🌱</span>
               <div class="ing-nm">Quinua</div>
-              <div class="ing-be">Superalimento con los 9 aminoácidos esenciales. Proteína completa, libre de gluten y rica en hierro y minerales.</div>
+              <div class="ing-be">Grano andino que amplía el perfil del producto y conecta la receta con ingredientes reconocidos en el país.</div>
               <span class="ing-tag">Proteína completa</span>
             </div>
 
@@ -792,6 +1092,30 @@
               <div class="ing-nm">Huevo &amp; leche</div>
               <div class="ing-be">Aportan proteína de alta calidad, calcio y vitamina D. Base para la textura y esponjosidad del queque.</div>
               <span class="ing-tag">Calcio &amp; proteína</span>
+            </div>
+
+            <div class="ing-card rv"
+                 style="--ic:#a42f1b;--ib:rgba(164,47,27,.1)">
+              <span class="ing-em">🩸</span>
+              <div class="ing-nm">Ingrediente hemínico aviar</div>
+              <div class="ing-be">Es el componente diferencial de la propuesta. Se incorpora de forma controlada dentro de la receta y requiere validación sanitaria y nutricional antes de su venta formal.</div>
+              <span class="ing-tag">Fuente propuesta de hierro</span>
+            </div>
+
+            <div class="ing-card rv d1"
+                 style="--ic:#d4782a;--ib:rgba(212,120,42,.11)">
+              <span class="ing-em">✨</span>
+              <div class="ing-nm">Formulación equilibrada</div>
+              <div class="ing-be">Las proporciones, el dulzor y la textura se ajustan mediante pruebas de degustación para mejorar aceptación y consistencia.</div>
+              <span class="ing-tag">Sabor en validación</span>
+            </div>
+
+            <div class="ing-card rv d2"
+                 style="--ic:#4a7a46;--ib:rgba(74,122,70,.11)">
+              <span class="ing-em">📋</span>
+              <div class="ing-nm">Información transparente</div>
+              <div class="ing-be">La versión comercial deberá indicar ingredientes, alérgenos, fecha de elaboración, conservación y tabla nutricional verificada.</div>
+              <span class="ing-tag">Confianza del consumidor</span>
             </div>
 
           </div>
@@ -806,7 +1130,7 @@
           <div class="s-hd">
             <div class="s-tag">⚠️ El contexto</div>
             <h2 class="s-title">¿Qué problema queremos resolver?</h2>
-            <p class="s-sub">Muchas personas, especialmente niños y jóvenes, consumen pocos alimentos ricos en hierro. NutriCake es la respuesta: una opción más útil y agradable para el consumo diario.</p>
+            <p class="s-sub">Muchas personas, especialmente niños y jóvenes, no mantienen una alimentación suficientemente variada. NutriCake explora una forma más familiar y agradable de acercar una propuesta con hierro.</p>
           </div>
           <div class="g2">
             <div class="card rv">
@@ -831,9 +1155,9 @@
             <div class="card rv d1">
               <div class="c-icon">✅</div>
               <h3>La hipótesis de solución</h3>
-              <p>Si ofrecemos un queque nutritivo enriquecido con hierro y vitaminas, ayudaremos a reducir el riesgo de anemia de una manera saludable y agradable al gusto.</p>
+              <p>Si ofrecemos un queque con una formulación verificada, aporte comprobado de hierro y sabor agradable, podremos evaluar si el público lo acepta como complemento de una alimentación variada.</p>
               <div style="height:16px"></div>
-              <p><strong>Hipótesis del producto:</strong> NutriCake será aceptado porque combina buen sabor, ingredientes nutritivos y beneficios reales para la salud.</p>
+              <p><strong>Hipótesis del producto:</strong> NutriCake será aceptado si combina buen sabor, información transparente, una presentación cuidada y una composición técnicamente validada.</p>
               <div style="height:12px"></div>
               <p><strong>Hipótesis del mercado:</strong> Padres, estudiantes y personas activas lo comprarán como alternativa saludable, práctica y accesible.</p>
             </div>
@@ -867,6 +1191,41 @@
               <h3>Enfoque familiar</h3>
               <p>Presentación individual y familiar para adaptarse a diferentes consumidores, momentos de consumo y puntos de venta.</p>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────── PÚBLICO -->
+    <section class="section" id="publico">
+      <div class="container">
+        <div class="sw">
+          <div class="s-hd">
+            <div class="s-tag">👨‍👩‍👧 Pensado para la vida real</div>
+            <h2 class="s-title">Una opción para distintos<br>momentos del día</h2>
+            <p class="s-sub">NutriCake busca adaptarse a rutinas reales: loncheras, pausas de estudio, reuniones y consumo familiar. La recomendación de consumo dependerá de la formulación nutricional final.</p>
+          </div>
+          <div class="audience-grid">
+            <article class="audience-card rv" style="--aud:rgba(240,180,41,.16)">
+              <div class="audience-ico">🎒</div>
+              <h3>Estudiantes</h3>
+              <p>Una presentación individual, fácil de transportar y pensada para una pausa durante la jornada.</p>
+            </article>
+            <article class="audience-card rv d1" style="--aud:rgba(74,122,70,.16)">
+              <div class="audience-ico">👨‍👩‍👧‍👦</div>
+              <h3>Familias</h3>
+              <p>Formato para compartir en casa y conversar sobre una alimentación más consciente.</p>
+            </article>
+            <article class="audience-card rv d2" style="--aud:rgba(179,59,30,.14)">
+              <div class="audience-ico">💼</div>
+              <h3>Personas activas</h3>
+              <p>Una alternativa práctica para acompañar el trabajo, los estudios o una tarde ocupada.</p>
+            </article>
+            <article class="audience-card rv d3" style="--aud:rgba(212,120,42,.16)">
+              <div class="audience-ico">🏫</div>
+              <h3>Instituciones</h3>
+              <p>Potencial para campañas, degustaciones y alianzas, sujeto a evaluación sanitaria y comercial.</p>
+            </article>
           </div>
         </div>
       </div>
@@ -906,6 +1265,41 @@
       </div>
     </section>
 
+    <!-- ────────────────────────────────────── PROCESO -->
+    <section class="section" id="proceso">
+      <div class="container">
+        <div class="sw">
+          <div class="s-hd">
+            <div class="s-tag">🧁 De la idea al producto</div>
+            <h2 class="s-title">Así estamos construyendo<br>NutriCake</h2>
+            <p class="s-sub">El proyecto avanza por etapas para tomar decisiones con evidencia y no basarse únicamente en una buena idea.</p>
+          </div>
+          <div class="process-grid">
+            <div class="process-step rv">
+              <div class="process-num">01</div>
+              <h3>Formular</h3>
+              <p>Definir ingredientes, proporciones, textura y métodos seguros de elaboración.</p>
+            </div>
+            <div class="process-step rv d1">
+              <div class="process-num">02</div>
+              <h3>Degustar</h3>
+              <p>Recoger opiniones sobre sabor, aroma, apariencia, tamaño y presentación.</p>
+            </div>
+            <div class="process-step rv d2">
+              <div class="process-num">03</div>
+              <h3>Verificar</h3>
+              <p>Analizar composición, inocuidad, vida útil, etiquetado y requisitos sanitarios.</p>
+            </div>
+            <div class="process-step rv d3">
+              <div class="process-num">04</div>
+              <h3>Crecer</h3>
+              <p>Probar canales de venta, alianzas locales y nuevas presentaciones del producto.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ────────────────────────────────────── EQUIPO -->
     <section class="section" id="equipo">
       <div class="container">
@@ -917,33 +1311,33 @@
           </div>
           <div class="g3">
             <div class="team-card rv">
-              <div class="avatar">1</div>
-              <h3>Aldea Zapata Mirella Brighette</h3>
+              <div class="avatar">MA</div>
+              <h3>Mirella Brighette Aldea Zapata</h3>
               <p>Investigación, recopilación de información y desarrollo de la propuesta de valor del producto.</p>
               <span class="team-role">🔍 Investigación</span>
             </div>
             <div class="team-card rv d1">
-              <div class="avatar">2</div>
-              <h3>Juarez Garcia Jose Jesus</h3>
+              <div class="avatar">JJ</div>
+              <h3>José Jesús Juárez García</h3>
               <p>Diseño de la identidad visual, presentación del producto y construcción de la marca NutriCake.</p>
               <p style="margin-top:8px">Creador de la identidad visual y responsable de la programación del sitio web.</p>
               <span class="team-role">🎨 Diseño y programación</span>
             </div>
             <div class="team-card rv d2">
-              <div class="avatar">3</div>
-              <h3>Jimenez Villegas Angie Lisbeth</h3>
+              <div class="avatar">AJ</div>
+              <h3>Angie Lisbeth Jiménez Villegas</h3>
               <p>Validación, encuestas, promoción y contacto directo con posibles clientes y compradores.</p>
               <span class="team-role">📊 Validación</span>
             </div>
             <div class="team-card rv">
-              <div class="avatar">4</div>
-              <h3>Gutierrez Rojas Farid Jesus</h3>
+              <div class="avatar">FG</div>
+              <h3>Farid Jesús Gutiérrez Rojas</h3>
               <p>Desarrollo comercial, estrategia de mercado y análisis de viabilidad del proyecto.</p>
               <span class="team-role">💼 Comercial</span>
             </div>
             <div class="team-card rv d1">
-              <div class="avatar">5</div>
-              <h3>Ramos Silva Araceli Jesenia</h3>
+              <div class="avatar">AR</div>
+              <h3>Araceli Jesenia Ramos Silva</h3>
               <p>Coordinación del equipo, gestión de recursos y seguimiento del proyecto.</p>
               <span class="team-role">📋 Coordinación</span>
             </div>
@@ -985,6 +1379,110 @@
                 <h4>Pastillas y formatos funcionales</h4>
                 <p>Línea adicional con presentaciones innovadoras orientadas a un público adulto, activo y consciente de su salud.</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────── PEDIDO -->
+    <section class="section" id="pedido">
+      <div class="container">
+        <div class="sw">
+          <div class="s-hd">
+            <div class="s-tag">🛍️ Hazlo a tu medida</div>
+            <h2 class="s-title">Arma tu consulta<br>en pocos segundos</h2>
+            <p class="s-sub">Selecciona una presentación y una cantidad. Prepararemos el mensaje por ti para consultar disponibilidad, precio y fecha de entrega por WhatsApp.</p>
+          </div>
+
+          <div class="order-shell rv">
+            <div class="order-fields">
+              <div class="field">
+                <label>1. Elige la presentación</label>
+                <div class="choice-row" id="sizeChoices">
+                  <button class="choice selected" type="button" data-value="Individual">🧁 Individual</button>
+                  <button class="choice" type="button" data-value="Caja para compartir">📦 Caja</button>
+                  <button class="choice" type="button" data-value="Pedido para evento">🎉 Evento</button>
+                </div>
+              </div>
+              <div class="field">
+                <label>2. Elige el motivo</label>
+                <div class="choice-row" id="purposeChoices">
+                  <button class="choice selected" type="button" data-value="Probar el producto">✨ Probar</button>
+                  <button class="choice" type="button" data-value="Compartir en familia">🏠 Compartir</button>
+                  <button class="choice" type="button" data-value="Solicitar una degustación">🤝 Degustación</button>
+                </div>
+              </div>
+              <div class="field">
+                <label>3. Cantidad aproximada</label>
+                <div class="qty-control">
+                  <button type="button" id="qtyMinus" aria-label="Disminuir cantidad">−</button>
+                  <output id="qtyOutput" aria-live="polite">1</output>
+                  <button type="button" id="qtyPlus" aria-label="Aumentar cantidad">+</button>
+                </div>
+              </div>
+            </div>
+
+            <aside class="order-summary">
+              <div>
+                <div class="summary-label">Tu consulta</div>
+                <div class="summary-product" id="summaryProduct">NutriCake individual</div>
+                <div class="summary-meta" id="summaryMeta">1 unidad · Para probar el producto</div>
+              </div>
+              <div>
+                <a class="btn-wa" id="orderButton"
+                   href="https://wa.me/51939945852?text=Hola%2C%20quisiera%20consultar%20por%201%20NutriCake%20individual."
+                   target="_blank" rel="noopener">
+                  Consultar por WhatsApp
+                </a>
+                <p class="microcopy">La consulta no confirma una compra. Te responderemos con disponibilidad y detalles.</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────── FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="sw">
+          <div class="s-hd">
+            <div class="s-tag">❓ Respuestas claras</div>
+            <h2 class="s-title">Lo que seguramente<br>quieres preguntarnos</h2>
+            <p class="s-sub">Aquí reunimos las dudas principales sobre el producto, su estado actual y la forma en que pensamos llevarlo al mercado.</p>
+          </div>
+
+          <div class="faq-list">
+            <div class="faq-item open">
+              <button class="faq-q" type="button" aria-expanded="true">
+                <span>¿NutriCake ya está disponible para venta permanente?</span><span>+</span>
+              </button>
+              <div class="faq-a"><div><p>El producto se encuentra en etapa de validación. Puedes escribirnos para conocer las degustaciones, lotes piloto o actividades disponibles en este momento.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" type="button" aria-expanded="false">
+                <span>¿Qué ingrediente aporta el hierro?</span><span>+</span>
+              </button>
+              <div class="faq-a"><div><p>La propuesta incorpora un ingrediente hemínico de origen aviar dentro de una receta con cacao. La cantidad final y el aporte por porción deberán verificarse mediante análisis nutricional.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" type="button" aria-expanded="false">
+                <span>¿El producto reemplaza un tratamiento contra la anemia?</span><span>+</span>
+              </button>
+              <div class="faq-a"><div><p>No. NutriCake es una propuesta alimentaria y no reemplaza el diagnóstico, tratamiento ni seguimiento indicado por profesionales de la salud.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" type="button" aria-expanded="false">
+                <span>¿Contiene alérgenos?</span><span>+</span>
+              </button>
+              <div class="faq-a"><div><p>La receta propuesta utiliza huevo, leche y cereales. La etiqueta final deberá declarar con precisión todos los ingredientes, alérgenos y posibles trazas según el proceso de producción.</p></div></div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" type="button" aria-expanded="false">
+                <span>¿Pueden preparar pedidos para colegios o eventos?</span><span>+</span>
+              </button>
+              <div class="faq-a"><div><p>Podemos evaluar degustaciones y pedidos piloto según cantidad, fecha y disponibilidad. Para una distribución institucional se deberán completar primero las validaciones y autorizaciones correspondientes.</p></div></div>
             </div>
           </div>
         </div>
@@ -1083,6 +1581,15 @@
 
   </main>
 
+  <div class="floating-actions">
+    <button class="to-top" id="toTop" type="button" aria-label="Volver arriba" title="Volver arriba">↑</button>
+    <a class="float-wa"
+       href="https://wa.me/51939945852?text=Hola%2C%20quisiera%20conocer%20m%C3%A1s%20sobre%20NutriCake"
+       target="_blank" rel="noopener" aria-label="Escribir a NutriCake por WhatsApp">
+      💬 <span>Escríbenos</span>
+    </a>
+  </div>
+
   <!-- ────────────────────────────────────── FOOTER -->
   <footer>
     <div class="container">
@@ -1125,12 +1632,14 @@
         <div class="f-col">
           <h5>Navegación</h5>
           <ul>
+            <li><a href="#historia">Nuestra idea</a></li>
             <li><a href="#ingredientes">Ingredientes</a></li>
             <li><a href="#problema">Problema</a></li>
             <li><a href="#propuesta">Propuesta</a></li>
             <li><a href="#mvp">MVP</a></li>
             <li><a href="#equipo">Equipo</a></li>
             <li><a href="#futuro">Línea futura</a></li>
+            <li><a href="#faq">Preguntas frecuentes</a></li>
           </ul>
         </div>
 
@@ -1140,7 +1649,7 @@
           <ul>
             <li><a href="#ingredientes">Lista de ingredientes</a></li>
             <li><a href="#propuesta">Beneficios</a></li>
-            <li><a href="#mvp">¿Dónde comprar?</a></li>
+            <li><a href="#pedido">Armar una consulta</a></li>
             <li><a href="#futuro">Próximos productos</a></li>
           </ul>
         </div>
@@ -1149,10 +1658,10 @@
         <div class="f-col">
           <h5>Contacto</h5>
           <ul>
-            <li><a href="https://wa.me/51939945852" target="_blank">WhatsApp</a></li>
-            <li><a href="https://instagram.com/nutricake" target="_blank">Instagram</a></li>
-            <li><a href="https://facebook.com/nutricake" target="_blank">Facebook</a></li>
-            <li><a href="https://tiktok.com/@nutricake" target="_blank">TikTok</a></li>
+            <li><a href="https://wa.me/51939945852" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a href="https://instagram.com/nutricake" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://facebook.com/nutricake" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="https://tiktok.com/@nutricake" target="_blank" rel="noopener">TikTok</a></li>
           </ul>
         </div>
 
@@ -1161,8 +1670,8 @@
       <div class="f-divider"></div>
 
       <div class="f-bottom">
-        <p>© 2025 <span>NutriCake</span> · Proyecto de innovación en nutrición y salud.</p>
-        <p>Hecho con 💛 para mejorar la alimentación de las personas.</p>
+        <p>© 2026 <span>NutriCake</span> · Proyecto académico de innovación alimentaria.</p>
+        <p>Desarrollado en Piura con propósito, transparencia y ganas de crecer.</p>
       </div>
     </div>
   </footer>
@@ -1171,11 +1680,32 @@
   // ─── PROGRESS BAR ────────────────────────────────────────
   const progressBar = document.getElementById('progress-bar');
   const navbar = document.getElementById('navbar');
+  const toTop = document.getElementById('toTop');
   window.addEventListener('scroll', () => {
-    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const total = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
     progressBar.style.width = (window.scrollY / total * 100) + '%';
     navbar.classList.toggle('scrolled', window.scrollY > 20);
+    toTop.classList.toggle('show', window.scrollY > 620);
   }, { passive: true });
+  toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ─── THEME ───────────────────────────────────────────────
+  const themeToggle = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('nutricake-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) document.body.classList.add('dark');
+  function syncThemeButton() {
+    const isDark = document.body.classList.contains('dark');
+    themeToggle.textContent = isDark ? '☀️' : '🌙';
+    themeToggle.setAttribute('aria-label', isDark ? 'Activar tema claro' : 'Activar tema oscuro');
+    document.querySelector('meta[name="theme-color"]').content = isDark ? '#160c07' : '#B33B1E';
+  }
+  syncThemeButton();
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('nutricake-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    syncThemeButton();
+  });
 
   // ─── HAMBURGER ───────────────────────────────────────────
   const hbg = document.getElementById('hbg');
@@ -1183,17 +1713,104 @@
   hbg.addEventListener('click', () => {
     mob.classList.toggle('open');
     hbg.classList.toggle('active');
+    const open = mob.classList.contains('open');
+    hbg.setAttribute('aria-expanded', String(open));
+    hbg.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    document.body.classList.toggle('menu-open', open);
   });
   function closeMob() {
     mob.classList.remove('open');
     hbg.classList.remove('active');
+    hbg.setAttribute('aria-expanded', 'false');
+    hbg.setAttribute('aria-label', 'Abrir menú');
+    document.body.classList.remove('menu-open');
   }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMob(); });
+
+  // ─── ACTIVE NAVIGATION ───────────────────────────────────
+  const mainSections = [...document.querySelectorAll('main section[id]')];
+  const navAnchors = [...document.querySelectorAll('.nav-links a')];
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      navAnchors.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+      });
+    });
+  }, { rootMargin: '-32% 0px -58% 0px', threshold: 0 });
+  mainSections.forEach(section => navObserver.observe(section));
 
   // ─── SCROLL REVEAL ───────────────────────────────────────
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
-  }, { threshold: 0.08, rootMargin: '0px 0px -36px 0px' });
-  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('vis');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -36px 0px' });
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.rv').forEach(el => el.classList.add('vis'));
+  }
+
+  // ─── FAQ ────────────────────────────────────────────────
+  document.querySelectorAll('.faq-q').forEach(button => {
+    button.addEventListener('click', () => {
+      const item = button.closest('.faq-item');
+      const willOpen = !item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(other => {
+        other.classList.remove('open');
+        other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (willOpen) {
+        item.classList.add('open');
+        button.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // ─── ORDER BUILDER ───────────────────────────────────────
+  let selectedSize = 'Individual';
+  let selectedPurpose = 'Probar el producto';
+  let quantity = 1;
+  const qtyOutput = document.getElementById('qtyOutput');
+  const summaryProduct = document.getElementById('summaryProduct');
+  const summaryMeta = document.getElementById('summaryMeta');
+  const orderButton = document.getElementById('orderButton');
+
+  function bindChoices(groupId, setter) {
+    document.querySelectorAll(`#${groupId} .choice`).forEach(choice => {
+      choice.addEventListener('click', () => {
+        document.querySelectorAll(`#${groupId} .choice`).forEach(c => c.classList.remove('selected'));
+        choice.classList.add('selected');
+        setter(choice.dataset.value);
+        updateOrder();
+      });
+    });
+  }
+  bindChoices('sizeChoices', value => selectedSize = value);
+  bindChoices('purposeChoices', value => selectedPurpose = value);
+
+  function updateOrder() {
+    const sizeLabel = selectedSize.toLowerCase();
+    qtyOutput.value = quantity;
+    qtyOutput.textContent = quantity;
+    summaryProduct.textContent = `NutriCake · ${selectedSize}`;
+    summaryMeta.textContent = `${quantity} ${quantity === 1 ? 'unidad' : 'unidades'} · ${selectedPurpose}`;
+    const message = `Hola, quisiera consultar por ${quantity} ${quantity === 1 ? 'unidad' : 'unidades'} de NutriCake en presentación ${sizeLabel}. Motivo: ${selectedPurpose}. ¿Podrían indicarme disponibilidad y precio?`;
+    orderButton.href = `https://wa.me/51939945852?text=${encodeURIComponent(message)}`;
+  }
+  document.getElementById('qtyMinus').addEventListener('click', () => {
+    quantity = Math.max(1, quantity - 1);
+    updateOrder();
+  });
+  document.getElementById('qtyPlus').addEventListener('click', () => {
+    quantity = Math.min(100, quantity + 1);
+    updateOrder();
+  });
+  updateOrder();
 
   // ─── ORBITING DOTS ───────────────────────────────────────
   const cake = document.getElementById('cakeEl');
@@ -1258,6 +1875,7 @@
   }
 
   function resize() { W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
+  resize();
   const dots = Array.from({ length: 40 }, () => new Dot());
   (function loop() {
     cx.clearRect(0, 0, W, H);
@@ -1265,7 +1883,6 @@
     dots.forEach(d => { d.step(); d.draw(); });
     requestAnimationFrame(loop);
   })();
-  resize();
   window.addEventListener('resize', resize, { passive: true });
   </script>
 </body>
